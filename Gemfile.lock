@@ -80,6 +80,7 @@ DEPENDENCIES
   haml (= 3.0.25)
   heroku (~> 2.2.8)
   mechanize (= 1.0.0)
+  net-ssh
   newrelic_rpm (~> 3.0.1)
   nokogiri (= 1.4.4)
   rack-test (= 0.5.7)

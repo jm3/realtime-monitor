@@ -3,38 +3,48 @@
 
 require 'erb'
 require 'haml'
+require 'net/ssh'
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/bundles'
 require 'sinatra/content_for2'
-
-ASSET_PREFIX = :development ? '' : 'http://cache1.jm3.net'
-
-# re-open stylesheet_bundle_link_tag to add CDN support:
-module Sinatra
-  module Bundles
-    module Helpers
-      alias :old_stylesheet_bundle_link_tag :stylesheet_bundle_link_tag 
-      def stylesheet_bundle_link_tag(bundle, media = nil)
-        old_stylesheet_bundle_link_tag(
-          bundle, media = nil
-        ).gsub( /'/, '"' ).gsub( /href="\/stylesheets/, "href=\"#{ASSET_PREFIX}/stylesheets").gsub( /\?[0-9]+/, '' )
-      end
-    end
-  end
-end
 
 stylesheet_bundle(:all, ['home-grid'])
 
 enable(:compress_bundles)  # => false (compress CSS and Javascript using packr and rainpress)
 enable(:cache_bundles)     # => false (set caching headers)
 
+def do_tail( session, file )
+  session.open_channel do |channel|
+    channel.on_data do |ch, data|
+      puts "[#{file}] -> #{data}"
+    end
+    channel.exec "tail -f #{file}"
+  end
+end
+
+# run once at startup
+configure do
+  ssh_connection_obj_placeholder = "i am foo"
+  @config = {
+    :persistent_ssh_connection => ssh_connection_obj_placeholder,
+    :log => "/var/log/nginx/api.140proof.com-access.log"
+  }
+  @config[:persistent_ssh_connection] = "i am bar"
+
+  Net::SSH.start( 'argon.140proof.com', 'jm3' ) do |session|
+    do_tail session, @config[:log] # is called once
+    session.loop
+  end
+end
+
+# run once before each request
 before do
-  @page_title = 'Founder, App Engineer, Product Designer.'
+  @page_title = '★ Realtime Monitoring ★ - '
 end
 
 get '/' do
-  @page_title = '★ John Manoogian III (jm3) ★ - ' + @page_title
+  puts @config["persistent_ssh_connection"]
   haml :index
 end
 
