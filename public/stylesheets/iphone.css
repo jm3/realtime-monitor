@@ -1,0 +1,25 @@
+/* font reset */
+html { background:none repeat scroll 0 0 #FFFFFF; color:#000000; }
+body, div, dl, dt, dd, ul, li, h1, h2, h3, p { margin:0; padding:0; }
+img { border:0 none; } 
+li { list-style:none outside none; }
+h1, h2, h3 { font-size:100%; font-weight:normal; }
+body { font:13px/1.231 arial,helvetica,clean,sans-serif; }
+
+/* home grid, iphone */
+
+div {
+  border: 1px solid transparent;
+}
+
+html {
+  background: #ddd;
+}
+
+body {
+  width: 320px;
+  margin: 0 auto;
+  height: 2100px;
+  padding-top: 1px;
+  background: #fff;
+}

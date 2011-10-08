@@ -1,0 +1,8 @@
+*.bak
+*.diff
+*.psd
+*.swp
+*~
+.DS_Store
+log
+vendor/ruby
