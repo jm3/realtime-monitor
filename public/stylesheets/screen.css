@@ -72,3 +72,8 @@ abbr:hover { color: black; }
 h2 a, dt a {
 	color: inherit;
 }
+
+#page {
+  height: 600px;
+  border: 1px solid red;
+}
