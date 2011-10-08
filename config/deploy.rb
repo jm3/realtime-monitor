@@ -1,6 +1,6 @@
 require 'capistrano_colors'
 
-set :application, "realtime-monitoring"
+set :application, "realtime-monitor"
 set :deploy_to,   "/var/www/#{application}"
 set :deploy_via,  :export
 set :port,        9210
