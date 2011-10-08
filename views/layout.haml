@@ -12,7 +12,14 @@
     = yield_content :meta
   %body{:onload => @onload || ""}
 
-  \#{yield}
+    \#{yield}
+
+    %footer
+      %a{:href => "/"}
+        monitoring
+      |
+      %a{:href => "/config"}
+        config
 
   :javascript
     var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
