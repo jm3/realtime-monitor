@@ -3,7 +3,7 @@
 
 require 'erb'
 require 'haml'
-require 'net/ssh'
+require 'net/ssh/multi'
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/bundles'
@@ -17,7 +17,7 @@ enable(:cache_bundles)     # => false (set caching headers)
 def do_tail( session, file )
   session.open_channel do |channel|
     channel.on_data do |ch, data|
-      puts "[#{file}] -> #{data}"
+      puts "#{channel[:host]} #{data}"
     end
     channel.exec "tail -f #{file}"
   end
@@ -25,14 +25,14 @@ end
 
 # run once at startup
 configure do
-  ssh_connection_obj_placeholder = "i am foo"
   @config = {
-    :persistent_ssh_connection => ssh_connection_obj_placeholder,
-    :log => "/var/log/nginx/api.140proof.com-access.log"
+    :log => "/var/log/nginx/api.140proof.com-access.log",
+    :user => "jm3"
   }
-  @config[:persistent_ssh_connection] = "i am bar"
 
-  Net::SSH.start( 'argon.140proof.com', 'jm3' ) do |session|
+  Net::SSH::Multi.start do |session|
+    session.use "#{@config[:user]}@argon.140proof.com"
+    session.use "#{@config[:user]}@neon.140proof.com"
     do_tail session, @config[:log] # is called once
     session.loop
   end
@@ -44,7 +44,6 @@ before do
 end
 
 get '/' do
-  puts @config["persistent_ssh_connection"]
   haml :index
 end
 
