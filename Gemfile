@@ -12,7 +12,7 @@ group :development do
   gem "capistrano", "2.5.19"
   gem "capistrano_colors", "~> 0.5.4"
   gem "mechanize", "1.0.0"
-  gem "net-ssh"
+  gem "net-ssh-multi"
   gem "nokogiri", "1.4.4"
   gem "rack-test", "0.5.7"
   gem "rspec", "2.5.0"
