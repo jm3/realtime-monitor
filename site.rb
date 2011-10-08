@@ -33,6 +33,16 @@ before do
   @page_title = 'Founder, App Engineer, Product Designer.'
 end
 
+get '/' do
+  @page_title = '★ John Manoogian III (jm3) ★ - ' + @page_title
+  haml :index
+end
+
+get '/config' do
+  @page_title = '★ config ★'
+  haml :config
+end
+
 get '/', :agent => /iPhone/ do
   @meta = '<meta name="viewport" content="width = 320" />'
   @iphone = true
@@ -42,11 +52,6 @@ end
 get '/iphone/?' do
   @meta = '<meta name="viewport" content="width = 320" />'
   @iphone = true
-  haml :index
-end
-
-get '/' do
-  @page_title = '★ John Manoogian III (jm3) ★ - ' + @page_title
   haml :index
 end
 
