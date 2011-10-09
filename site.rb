@@ -9,6 +9,8 @@ require 'sinatra'
 require 'sinatra/bundles'
 require 'sinatra/content_for2'
 
+set :server, :thin
+
 stylesheet_bundle(:all, ['home-grid'])
 
 enable(:compress_bundles)  # => false (compress CSS and Javascript using packr and rainpress)
@@ -23,13 +25,7 @@ def do_tail( session, file )
   end
 end
 
-# run once at startup
-configure do
-  @config = {
-    :log => "/var/log/nginx/api.140proof.com-access.log",
-    :user => "jm3"
-  }
-
+def stream_data
   Net::SSH::Multi.start do |session|
     session.use "#{@config[:user]}@argon.140proof.com"
     session.use "#{@config[:user]}@neon.140proof.com"
@@ -38,13 +34,37 @@ configure do
   end
 end
 
+# run once at startup
+configure do
+  @config = {
+    :log => "/var/log/nginx/api.140proof.com-access.log",
+    :user => "jm3"
+  }
+  #stream_data
+end
+
 # run once before each request
 before do
   @page_title = '★ Realtime Monitoring ★ - '
 end
 
 get '/' do
-  haml :index
+  # content_type 'text/event-stream'
+  # newevent   = false
+  # response = "data: "+newevent.inspect+" \n\n"
+  # headers \
+  #   'Content-Type' => 'text/event-stream',
+  #   'Cache-Control' => 'no-cache' 
+
+  stream do |out|
+    out << "It's gonna be legen -\n"
+    sleep 0.5
+    out << " (wait for it) \n"
+    sleep 1
+    out << "- dary!\n"
+  end
+
+  #haml :index
 end
 
 get '/config' do
