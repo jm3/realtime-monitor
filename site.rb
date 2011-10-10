@@ -6,15 +6,7 @@ require 'haml'
 require 'net/ssh/multi'
 require 'rubygems'
 require 'sinatra'
-require 'sinatra/bundles'
 require 'sinatra/content_for2'
-
-set :server, :thin
-
-stylesheet_bundle(:all, ['home-grid'])
-
-enable(:compress_bundles)  # => false (compress CSS and Javascript using packr and rainpress)
-enable(:cache_bundles)     # => false (set caching headers)
 
 def do_tail( session, file )
   session.open_channel do |channel|

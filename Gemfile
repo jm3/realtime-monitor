@@ -4,8 +4,7 @@ gem "foreman"
 gem "haml"
 gem "net-ssh-multi"
 gem "rainbows"
-gem "sinatra"
-gem "sinatra-bundles"
+gem "sinatra", "1.3"
 gem "sinatra-content-for2"
 
 group :development do
