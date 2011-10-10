@@ -1,12 +1,5 @@
 / valid HTML5, for what that's worth: http://validator.w3.org/check?uri=http://jm3.net/
-- content_for :css do
-  - if @iphone
-    %style{:type => "text/css"}
-      @media screen { 
-      = File.read(File.join('public', 'stylesheets', 'iphone.css'))
-      }
-  - else
-    = stylesheet_bundle_link_tag(:all)
+/ CSS missing
 
 #header
   %h1 Realtime Monitoring
@@ -19,3 +12,9 @@
   (notes)
 
 %script{:src => "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js", :type => "text/javascript"}
+:javascript
+  var source = new EventSource('stream');
+  source.onmessage = function (event) {
+    console.log(event.data);
+  };
+
