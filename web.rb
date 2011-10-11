@@ -13,6 +13,9 @@ set :server, :rainbows
 
 # run once at startup
 configure do
+  redis_url = ENV["REDISTOGO_URL"] || "redis://localhost:6379"
+  uri = URI.parse(redis_url)
+  set :redis, Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 end
 
 # run once before each request
@@ -30,10 +33,6 @@ get "/stream" do
     c = redis.rpop("log-stream")
     out << "data: #{c}\n"
   end
-end
-
-get "/settings" do
-  haml :settings
 end
 
 error 404 do
