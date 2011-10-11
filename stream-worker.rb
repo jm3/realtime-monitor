@@ -13,7 +13,8 @@ redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.passwor
 def do_tail( session, file )
   session.open_channel do |channel|
     channel.on_data do |ch, data|
-      puts redis.lpush "log-stream", "#{channel[:host]} #{data}"
+      redis.publish "log-stream", "#{channel[:host]} #{data}"
+      print "p"
     end
     channel.exec "tail -f #{file}"
   end

@@ -29,13 +29,24 @@ end
 
 get "/stream" do
   headers "Content-Type" => "text/event-stream", "Cache-Control" => "no-cache"
+
   stream do |out|
-  puts "stream request received"
-    (1..100).each do |i|
-      c = redis.rpop("log-stream")
-      out << "data: #{c}\n"
+    redis.subscribe("log-stream" ) do |on|
+      on.subscribe do |event, total|
+        puts "Subscribed to ##{event} (#{total} subscriptions)"
+      end
+
+      on.message do |pattern, event, message|
+        out << "data: #{event}\n"
+        print "e"
+      end
+    end
+
+    on.unsubscribe do |event, total|
+      puts "Unsubscribed from ##{event} (#{total} subscriptions)"
     end
   end
+
 end
 
 error 404 do
