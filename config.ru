@@ -1,6 +1,6 @@
 require "rubygems"
 require "bundler"
 Bundler.setup
-require "./site.rb"
+require "./web.rb"
 
 run Sinatra::Application
