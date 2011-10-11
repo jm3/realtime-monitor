@@ -31,18 +31,18 @@ get "/stream" do
   headers "Content-Type" => "text/event-stream", "Cache-Control" => "no-cache"
 
   stream do |out|
-    redis.subscribe("log-stream" ) do |on|
-      on.subscribe do |event, total|
+    redis.psubscribe("global.clicks", "global.impressions" ) do |on|
+      on.psubscribe do |event, total|
         puts "Subscribed to ##{event} (#{total} subscriptions)"
       end
 
-      on.message do |pattern, event, message|
-        out << "data: #{event}\n"
+      on.pmessage do |pattern, event, message|
+        out << "data: #{event}: #{message}\n"
         print "e"
       end
     end
 
-    on.unsubscribe do |event, total|
+    on.punsubscribe do |event, total|
       puts "Unsubscribed from ##{event} (#{total} subscriptions)"
     end
   end
