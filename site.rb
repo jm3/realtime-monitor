@@ -12,8 +12,6 @@ require "sinatra/content_for2"
 def do_tail( session, file )
   session.open_channel do |channel|
     channel.on_data do |ch, data|
-      @stack << "channel[:host]} #{data}"
-      puts @stack.size
       puts "#{channel[:host]} #{data}"
     end
     channel.exec "tail -f #{file}"
@@ -22,21 +20,15 @@ end
 
 def stream_data
   Net::SSH::Multi.start do |session|
-    session.use "#{@config[:user]}@argon.140proof.com"
-    session.use "#{@config[:user]}@neon.140proof.com"
-    do_tail session, @config[:log] # is called once
+    session.use "jm3@argon.140proof.com"
+    session.use "jm3@neon.140proof.com"
+    do_tail session, "/var/log/nginx/api.140proof.com-access.log" # is called once
     session.loop
   end
 end
 
 # run once at startup
 configure do
-  @stack = []
-  @config = {
-    :log => "/var/log/nginx/api.140proof.com-access.log",
-    :user => "jm3"
-  }
-  stream_data
 end
 
 # run once before each request
@@ -49,18 +41,22 @@ get "/" do
 end
 
 get "/stream" do
+  #stream_data
   headers "Content-Type" => "text/event-stream", "Cache-Control" => "no-cache"
 
+  #stream(:keep_open) do |out|
+  #  EventMachine::PeriodicTimer.new(1) { out << "#{Time.now}\n" }
+  #end
+
   stream do |out|
-    #out << @stack[0]
-    #sleep 0.5
+    sleep 0.5
     out << "data: Foo\n"
   end
 end
 
-get "/config" do
-  @page_title = "★ config ★"
-  haml :config
+get "/settings" do
+  @page_title = "★ settings ★"
+  haml :settings
 end
 
 get "/", :agent => /iPhone/ do
