@@ -1,5 +1,5 @@
 h1. realtime monitoring
 
-hi. FUCKING RAINBOWS
+Track social ad campaign performance in real time using Sinatra, Redis PubSub, and Server-Sent Events. Note: USES RAINBOWS
 
 !http://farm4.static.flickr.com/3492/3178127811_79e1ced8a1.jpg!
