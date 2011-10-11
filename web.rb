@@ -30,8 +30,11 @@ end
 get "/stream" do
   headers "Content-Type" => "text/event-stream", "Cache-Control" => "no-cache"
   stream do |out|
-    c = redis.rpop("log-stream")
-    out << "data: #{c}\n"
+  puts "stream request received"
+    (1..100).each do |i|
+      c = redis.rpop("log-stream")
+      out << "data: #{c}\n"
+    end
   end
 end
 
