@@ -13,9 +13,9 @@ set :server, :rainbows
 
 # run once at startup
 configure do
-  redis_url = ENV["REDISTOGO_URL"] || "redis://localhost:6379"
-  uri = URI.parse(redis_url)
-  set :redis, Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+  #redis_url = ENV["REDISTOGO_URL"] || "redis://localhost:6379"
+  #uri = URI.parse(redis_url)
+  #set :redis, Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 end
 
 # run once before each request
@@ -40,11 +40,6 @@ error 404 do
 end
 
 helpers do
-  def img( uri )
-    return "" unless uri
-    "<img src=\"#{img_path(uri)}\" />"
-  end
-
   def img_path( uri )
     return "" unless uri
     uri = uri.match("^/images/") ? uri : "/images/" + uri
