@@ -1,1 +1,2 @@
-web: bundle exec ruby site.rb -p $PORT
+web: bundle exec ruby web.rb -p $PORT
+worker: bundle exec ruby worker.rb
