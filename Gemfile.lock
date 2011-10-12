@@ -4,6 +4,9 @@ GEM
     addressable (2.2.6)
     async-rack (0.5.1)
       rack (~> 1.1)
+    async_sinatra (0.5.0)
+      rack (>= 1.2.1)
+      sinatra (>= 1.0)
     capistrano (2.5.19)
       highline
       net-scp (>= 1.0.0)
@@ -83,6 +86,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  async_sinatra
   capistrano
   capistrano_colors
   eventmachine

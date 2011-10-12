@@ -1,5 +1,6 @@
 source "http://rubygems.org"
 
+gem "async_sinatra"
 gem "eventmachine"
 gem "foreman"
 gem "haml"
@@ -11,10 +12,6 @@ gem "sinatra-content-for2"
 gem "sinatra-redis"
 gem "sinatra-synchrony"
 gem "thin"
-
-# these fail to install on my mac :(
-# gem "thin"
-# gem "eventmachine"
 
 group :development do
   gem "heroku"
