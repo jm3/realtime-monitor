@@ -1,5 +1,6 @@
 source "http://rubygems.org"
 
+gem "async_sinatra"
 gem "eventmachine"
 gem "foreman"
 gem "haml"
