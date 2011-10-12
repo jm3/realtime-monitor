@@ -1,5 +1,6 @@
 source "http://rubygems.org"
 
+gem "eventmachine"
 gem "foreman"
 gem "haml"
 gem "net-ssh-multi"
