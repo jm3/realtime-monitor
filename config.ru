@@ -8,4 +8,4 @@ unless File.basename( $0 ).match( /rainbows/ )
   exit 1
 end
 
-run Sinatra::Application
+run App

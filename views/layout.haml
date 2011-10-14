@@ -2,14 +2,11 @@
 %html{:xmlns => "http://www.w3.org/1999/xhtml"}
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    = yield_content :css
     %title<
       = @page_title
     %meta{:content => @meta_description || "Realtime Monitoring", :name => "description"}
     %meta{:content => "140 Proof / John Manoogian III / jm3@140proof.com", :name => "author"}/
     = @meta
-    %link{:href => @favicon || img_path('/images/favicon.png'), :rel => "shortcut icon"}/
-    = yield_content :meta
   %body{:onload => @onload || ""}
 
     \#{yield}

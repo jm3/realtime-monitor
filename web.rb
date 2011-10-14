@@ -1,56 +1,62 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 
-require "fiber"
-require "rack/fiber_pool"
-require "sinatra/base"
+require "erb"
+require "haml"
+require "net/ssh/multi"
+require "rubygems"
+require "sinatra"
+require "sinatra/content_for2"
+require "sinatra/redis"
 
-require "redis"
-require "redis/connection/synchrony"
+set :server, :rainbows
 
-# rackup -s thin app.rb
-#
-# curl http://localhost:9292/foo
-# curl http://localhost:9292/bar
-#
-# redis-cli publish foo "hello"
-# redis-cli publish bar "hola"
+# run once at startup
+configure do
+  #redis_url = ENV["REDISTOGO_URL"] || "redis://localhost:6379"
+  #uri = URI.parse(redis_url)
+  #set :redis, Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+end
 
-class App < Sinatra::Base
+# run once before each request
+before do
+  @page_title = "★ Realtime Monitoring ★"
+end
 
-  use Rack::FiberPool
+get "/" do
+  haml :index
+end
 
-  # run once at startup
-  configure do
-  end
+get "/stream" do
+  headers "Content-Type" => "text/event-stream", "Cache-Control" => "no-cache"
 
-  # run once before each request
-  before do
-  end
-
-  get "/:channel" do |channel|
-    redis = Redis.connect
-    redis.subscribe(channel) do |on|
-      on.message do |channel, message|
-        redis.unsubscribe
-        body "#{channel}: #{message}"
+  stream do |out|
+    redis.psubscribe("global.clicks", "global.impressions" ) do |on|
+      on.psubscribe do |event, total|
+        puts "Subscribed to ##{event} (#{total} subscriptions)"
       end
+
+      on.pmessage do |pattern, event, message|
+        out << "data: #{event}: #{message}\n"
+        print "e"
+      end
+    end
+
+    on.punsubscribe do |event, total|
+      puts "Unsubscribed from ##{event} (#{total} subscriptions)"
     end
   end
 
-  get "/" do
-    haml :index
-  end
+end
 
-  get "/stream" do
-    headers "Content-Type" => "text/event-stream", "Cache-Control" => "no-cache"
-  end
+error 404 do
+  haml :error
+end
 
-  error 404 do
-    haml :error
+helpers do
+  def img_path( uri )
+    return "" unless uri
+    uri = uri.match("^/images/") ? uri : "/images/" + uri
+    :development ? uri : "http://cache#{cache_server}.jm3.net#{uri}"
   end
-
-  helpers do
-  end
-
 end
