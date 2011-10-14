@@ -1,62 +1,48 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 
-require "erb"
-require "haml"
-require "net/ssh/multi"
+require "em-synchrony"
+require "redis"
+require "redis/connection/synchrony"
 require "rubygems"
 require "sinatra"
+require "sinatra/base"
 require "sinatra/content_for2"
 require "sinatra/redis"
+require "sinatra/synchrony"
 
-set :server, :rainbows
+class App < Sinatra::Base
+  register Sinatra::Synchrony
 
-# run once at startup
-configure do
-  #redis_url = ENV["REDISTOGO_URL"] || "redis://localhost:6379"
-  #uri = URI.parse(redis_url)
-  #set :redis, Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
-end
+  get "/" do
+    haml :index
+  end
 
-# run once before each request
-before do
-  @page_title = "★ Realtime Monitoring ★"
-end
-
-get "/" do
-  haml :index
-end
-
-get "/stream" do
-  headers "Content-Type" => "text/event-stream", "Cache-Control" => "no-cache"
-
-  stream do |out|
-    redis.psubscribe("global.clicks", "global.impressions" ) do |on|
-      on.psubscribe do |event, total|
-        puts "Subscribed to ##{event} (#{total} subscriptions)"
-      end
-
-      on.pmessage do |pattern, event, message|
-        out << "data: #{event}: #{message}\n"
-        print "e"
+  get "/stream" do
+    headers "Content-Type" => "text/event-stream", "Cache-Control" => "no-cache"
+    redis = Redis.connect
+    channel = "global.impressions"
+    redis.subscribe(channel) do |on|
+      on.message do |channel, message|
+        redis.unsubscribe
+        body "data: #{channel}: #{message}\n"
       end
     end
 
-    on.punsubscribe do |event, total|
-      puts "Unsubscribed from ##{event} (#{total} subscriptions)"
-    end
+    #stream do |out|
+    #  out << "data: event: message\n"
+    # end
+
+    # EM.synchrony do
+    #   r = Redis.new
+    #   body "data: #{channel}: #{message}\n"
+    # end
+
+    # stream(:keep_open) do |out|
+    #   EventMachine::PeriodicTimer.new(1) { out << "data: #{Time.now}\n" }
+    # end
+
   end
 
 end
 
-error 404 do
-  haml :error
-end
-
-helpers do
-  def img_path( uri )
-    return "" unless uri
-    uri = uri.match("^/images/") ? uri : "/images/" + uri
-    :development ? uri : "http://cache#{cache_server}.jm3.net#{uri}"
-  end
-end
