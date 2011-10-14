@@ -1,12 +1,19 @@
 / valid HTML5, for what that's worth: http://validator.w3.org/check?uri=http://jm3.net/
 / CSS missing
 
+:css
+  #log {
+    padding: 1.0em;
+  }
+
 #header
   %h1 Realtime Monitoring
 
 #page
   %h2
     live feed of campaign traffic
+    %form
+      %textarea#log{:rows => 8, :cols => 100}
 
 %aside
   (notes)
@@ -16,5 +23,6 @@
   var source = new EventSource('stream');
   source.onmessage = function (event) {
     console.log(event.data);
+    $("#log").html( $("#log").html() + "\n" + event.data );
   };
 
