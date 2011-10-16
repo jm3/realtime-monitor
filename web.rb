@@ -38,7 +38,6 @@ get "/stream" do
 
       on.pmessage do |pattern, event, message|
         out << "data: #{event}: #{message}\n"
-        print "e"
       end
     end
 
