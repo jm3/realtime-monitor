@@ -1,20 +1,30 @@
 / valid HTML5, for what that's worth: http://validator.w3.org/check?uri=http://jm3.net/
 / CSS missing
 
+:css
+  #log {
+    font-size: 12px;
+    font-weight: bold;
+    font-family: monospace;
+    padding: 1.0em;
+  }
+
 #header
   %h1 Realtime Monitoring
 
 #page
-  %h2
-    live feed of campaign traffic
-
-%aside
-  (notes)
+  %form
+    %textarea#log{:rows => 16, :cols => 160}
 
 %script{:src => "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js", :type => "text/javascript"}
 :javascript
   var source = new EventSource('stream');
+  var max_length = 10000;
   source.onmessage = function (event) {
-    console.log(event.data);
+    if( $("#log").html().length > max_length )
+      $("#log").html( $("#log").html().substring(0, 1000));
+
+    $("#log").html( 
+      event.data + "\n" + $("#log").html() );
   };
 
