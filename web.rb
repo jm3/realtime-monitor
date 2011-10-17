@@ -31,13 +31,14 @@ get "/stream" do
   headers "Content-Type" => "text/event-stream", "Cache-Control" => "no-cache"
 
   stream do |out|
-    redis.psubscribe("global.clicks", "global.impressions" ) do |on|
+    #redis.psubscribe("global.clicks", "global.impressions" ) do |on|
+    redis.psubscribe( "global.clicks" ) do |on|
       on.psubscribe do |event, total|
         puts "Subscribed to ##{event} (#{total} subscriptions)"
       end
 
       on.pmessage do |pattern, event, message|
-        out << "data: #{event}: #{message}\n"
+        out << "data: #{message}\n"
       end
     end
 

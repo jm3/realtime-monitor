@@ -14,10 +14,6 @@ def do_tail( session, file )
   session.open_channel do |channel|
     channel.on_data do |ch, data|
       host = channel[:host].gsub( /\.140proof\.com/, '' )
-
-      # scrub logs a bit
-      data = data.gsub( / - -/, '').gsub( /"-" /, '').gsub( /"+0000" /, '')
-
       redis.publish "global.clicks", "#{host} #{data}" and print "*Pc* " if data.match( %r{/clicks/} )
       redis.publish "global.impressions", "#{host} #{data}" and print "Pi " if data.match( %r{/impressions/} )
     end
