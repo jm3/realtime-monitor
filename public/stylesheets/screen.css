@@ -21,8 +21,10 @@ h2 a, dt a {
 }
 
 #log {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: bold;
   font-family: monospace;
   padding: 1.0em;
+  background: #111;
+  color: #00ff00;
 }
