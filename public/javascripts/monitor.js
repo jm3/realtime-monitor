@@ -4,6 +4,7 @@ var source = new EventSource('stream');
 var max_length = 10000;
 var max_faces = 200; 
 var uid, faces = 0, users = [];
+var BOGUS_USER_ID = 289057210;
 
 source.onmessage = function (event) {
   if( $("#log").html().length > max_length )
@@ -19,7 +20,8 @@ source.onmessage = function (event) {
 
   event.data.match( /&(user_id|hb)=(\d+)/ );
   uid = RegExp.$2;
-  $("#faces").append( "<img src='http://img.tweetimag.es/i/" + uid + "_n' title='" + uid + "' width='73' height='73' />" );
+  if( uid != BOGUS_USER_ID && uid != "log" )
+    $("#faces").append( "<img src='http://img.tweetimag.es/i/" + uid + "_n' title='" + uid + "' width='73' height='73' />" );
 
 };
 
@@ -38,7 +40,7 @@ function get_user_for_id( uid ) {
     success: function(data){
       var u = data;
       users.push( u[0] );
-      window.open( "http://twitter.com/" + u[0]["screen_name"] );
+      window.open( "http://twitter.com/" + u[0]["screen_name"], "twitter_bio" );
     }
   });
 }
