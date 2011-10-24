@@ -48,6 +48,10 @@ get "/stream" do
 
 end
 
+get "/flip/?" do
+  haml :flip
+end
+
 error 404 do
   haml :error
 end

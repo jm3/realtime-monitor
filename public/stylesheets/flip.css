@@ -1,0 +1,80 @@
+body, div, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, img, form, fieldset, blockquote {
+	margin: 0; padding: 0; border: 0;
+}
+
+body {
+	background: #3f3f3f url(wood-bg.png);
+	font-family: Helvetica, Arial, Sans-Serif;
+}
+
+body {
+	width: 750px;
+	position: relative;
+	margin: 50px auto;
+}
+
+.container {
+	-webkit-perspective: 1000;
+}
+
+.card {
+	width: 73px; height: 73px;
+	border: 8px solid #fff;	
+	-webkit-transform-style: preserve-3d;
+	-webkit-transition: 0.5s;
+}
+
+.container:hover .card {
+  -webkit-transform: rotateY(180deg);				
+}
+
+.face {
+	position: absolute;
+	-webkit-backface-visibility: hidden;
+}
+
+.front {
+	z-index: 10;
+}
+
+.container:hover .front {
+	z-index: 0;
+}
+
+.sixthburrito,
+.flipper_a {
+	float: left; position: absolute; top: 30px; left: 20px;
+}
+
+.flipper_a {
+  top: 120px; right: 20px;
+}
+
+.flipper_a .back, 
+.sixthburrito .back {
+  -webkit-transform: rotateY(180deg);
+  background: #a3a3a3 url(texture.png); 
+}
+
+.sixthburrito img, 
+.flipper_a img {
+  float: right;
+}
+
+.sixthburrito p,
+.flipper_a p {
+  float: left; margin: 0 0 20px 0;
+  font-size: 17px; line-height: 28px; color: #4c4c4c;
+}
+
+.sixthburrito dl,
+.flipper_a dl {
+  font-size: 30px; font-weight: bold; 
+  line-height: 40px; 
+  color: #717171;
+  padding: 5px 10px; 
+  overflow: hidden; 
+  background: #cfcfcf url(gradient.png) repeat-y;
+  -webkit-box-shadow: 0 1px 5px #888;
+  text-shadow: 0 1px 1px #f5f5f5;
+}
