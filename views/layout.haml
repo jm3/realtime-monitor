@@ -12,9 +12,12 @@
     = yield_content :meta
   %body{:onload => @onload || ""}
 
-    \#{yield}
+    %header
+      #trackable
+        Track:
+        - [ "impressions", "clicks", "hashtag", "keyword", "screen_name"].each do |trackable|
+          %a{:href => "/track/#{trackable}", :class => "ajax track", :"data-value" => trackable}= trackable |
 
-    %footer
       %a{:href => "/"}
         monitoring
       |
@@ -23,6 +26,8 @@
       |
       %a{:href => "/settings"}
         settings
+
+    \#{yield}
 
   :javascript
     var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");

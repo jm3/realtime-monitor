@@ -11,7 +11,7 @@ uri = URI.parse(redis_url)
 redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 
 @ssh_user = "jm3"
-@num_servers = 14
+@num_servers = 2
 
 def do_tail( session, file )
   session.open_channel do |channel|

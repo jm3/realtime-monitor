@@ -45,3 +45,35 @@ function get_user_for_id( uid ) {
   });
 }
 
+function init_config_ui() {
+  $("a.ajax").click( function() {
+    console.log( "clicked cfg link: " + $(this).attr("href") );
+    console.log( $(this) );
+    change_config_setting( "track", $(this).data("value") );
+    event.preventDefault();
+  });
+}
+
+function change_config_setting( setting, value ) {
+  console.log( "changing " + setting + " to " + value );
+
+  $.getJSON("track/" + value + ".json", function(data) {
+    var items = [];
+    console.log( "something happened!" );
+
+    $.each(data, function(key, val) {
+      items.push('<li id="' + key + '">' + val + '</li>');
+      console.log( key + ": " + val );
+    });
+
+    $('<ul/>', {
+      'class': 'my-new-list',
+      html: items.join('')
+    }).appendTo('body');
+  });
+}
+
+$(document).ready( function() {
+  init_config_ui();
+});
+

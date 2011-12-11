@@ -8,6 +8,7 @@ require "rubygems"
 require "sinatra"
 require "sinatra/content_for2"
 require "sinatra/redis"
+require "json"
 
 set :server, :rainbows
 
@@ -46,6 +47,21 @@ get "/stream" do
     end
   end
 
+end
+
+get "/track/*.json" do
+  content_type :json
+  subject = params[:splat][0]
+
+  case subject
+  when "impressions", "clicks", "hashtag", "keyword", "screen_name"
+    puts "got valid subject #{subject}!"
+    redis.set "cfg:track", subject
+  else
+    puts "Now you're just making shit up!"
+  end
+
+  { :track => redis.get("cfg:track") }.to_json
 end
 
 get "/flip/?" do
