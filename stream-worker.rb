@@ -10,6 +10,9 @@ redis_url = ENV["REDISTOGO_URL"] || "redis://localhost:6379"
 uri = URI.parse(redis_url)
 redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 
+@ssh_user = "jm3"
+@num_servers = 14
+
 def do_tail( session, file )
   session.open_channel do |channel|
     channel.on_data do |ch, data|
@@ -23,8 +26,10 @@ end
 
 def stream_data
   Net::SSH::Multi.start do |session|
-    session.use "jm3@api1.140proof.com"
-    session.use "jm3@api2.140proof.com"
+    1.upto(@num_servers) do |i|
+      puts "Attaching listener to api#{i}.140proof.com"
+      session.use "#{@ssh_user}@api#{i}.140proof.com"
+    end
     do_tail session, "/var/log/nginx/api.140proof.com-access.log" # is called once
     session.loop
   end
