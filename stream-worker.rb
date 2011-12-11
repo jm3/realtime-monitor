@@ -23,8 +23,8 @@ end
 
 def stream_data
   Net::SSH::Multi.start do |session|
-    session.use "jm3@argon.140proof.com"
-    session.use "jm3@neon.140proof.com"
+    session.use "jm3@api1.140proof.com"
+    session.use "jm3@api2.140proof.com"
     do_tail session, "/var/log/nginx/api.140proof.com-access.log" # is called once
     session.loop
   end
