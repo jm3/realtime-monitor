@@ -1,0 +1,5 @@
+---
+num_servers: 4
+redis_url: "redis://localhost:6379"
+server_domain: "140proof.com"
+
