@@ -14,11 +14,13 @@ redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.passwor
 @num_servers = 2
 
 def do_tail( session, file )
+  #subject = redis.get("cfg:track")
+  subject = "impressions"
   session.open_channel do |channel|
     channel.on_data do |ch, data|
       host = channel[:host].gsub( /\.140proof\.com/, '' )
-      redis.publish "global.clicks", "#{host} #{data}" and print "*Pc* " if data.match( %r{/clicks/} )
-      redis.publish "global.impressions", "#{host} #{data}" and print "Pi " if data.match( %r{/impressions/} )
+      redis.publish "global.clicks", "#{host} #{data}" and print "*Pc* " if( subject == "clicks" and data.match( %r{/clicks/} ))
+      redis.publish "global.impressions", "#{host} #{data}" and print "Pi " if( subject == "impressions" and data.match( %r{/impressions/} ))
     end
     channel.exec "tail -f #{file}"
   end

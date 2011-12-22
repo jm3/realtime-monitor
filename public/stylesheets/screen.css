@@ -27,4 +27,10 @@ h2 a, dt a {
   padding: 1.0em;
   background: #111;
   color: #00ff00;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+}
+
+.user {
+  padding: 3px;
 }

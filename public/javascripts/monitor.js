@@ -2,7 +2,7 @@
 
 var source = new EventSource('stream');
 var max_length = 10000;
-var max_faces = 200; 
+var max_faces = 400; 
 var uid, faces = 0, users = [];
 var BOGUS_USER_ID = 289057210;
 
@@ -21,7 +21,8 @@ source.onmessage = function (event) {
   event.data.match( /&(user_id|hb)=(\d+)/ );
   uid = RegExp.$2;
   if( uid != BOGUS_USER_ID && uid != "log" )
-    $("#faces").append( "<img src='http://img.tweetimag.es/i/" + uid + "_n' title='" + uid + "' width='73' height='73' />" );
+    $("#faces").append( "<img class='user' src='http://img.tweetimag.es/i/" 
+    + uid + "_n' title='" + uid + "' width='48' height='48' />" );
 
 };
 
