@@ -10,10 +10,6 @@ gem "sinatra", "1.3"
 gem "sinatra-content-for2", "0.2.4"
 gem "sinatra-redis"
 
-# gem "ohm"
-# gem "tweetstream"
-# gem "yajl-ruby"
-
 group :development do
   gem "heroku"
   gem "capistrano"
