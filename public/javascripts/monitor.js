@@ -18,12 +18,14 @@ source.onmessage = function (event) {
     faces = 0;
   }
 
-  event.data.match( /api(\d*).*&(user_id|hb)=(\d+)/ );
+  event.data.match( /api(\d*).*app_id=(\d*)&(user_id|hb)=(\d+)/ );
   server = RegExp.$1;
+  app = RegExp.$2;
+  uid = RegExp.$4;
   console.log( "server: " + server );
-  uid = RegExp.$3;
+  console.log( "app: " + app );
   if( uid != BOGUS_USER_ID && uid != "log" )
-    $("#faces").append( "<img class='user' src='http://img.tweetimag.es/i/" 
+    $("#faces").append( "<img class='user app" + app + " api" + server + "' src='http://img.tweetimag.es/i/" 
     + uid + "_n' title='" + uid + "' width='48' height='48' />" );
 
 };
