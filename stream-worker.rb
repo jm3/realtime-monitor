@@ -16,6 +16,9 @@ redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.passwor
 @num_servers   = config["num_servers"]
 @server_domain = config["server_domain"]
 
+# always reset in case we were left in a fcked state:
+redis.set "cfg:track", "impressions"
+
 def do_tail( session, file )
   subject = redis.get("cfg:track") || "impressions"
   session.open_channel do |channel|
