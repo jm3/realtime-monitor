@@ -1,4 +1,4 @@
-worker_processes 8 # assuming four CPU cores
+worker_processes 8 # assuming eight CPU cores
 
 Rainbows! do
   use :FiberSpawn
