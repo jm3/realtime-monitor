@@ -7,7 +7,7 @@ gem "net-ssh-multi"
 gem "rainbows"
 gem "redis"
 gem "sinatra", "1.3"
-gem "sinatra-content-for2"
+gem "sinatra-content-for2", "0.2.4"
 gem "sinatra-redis"
 
 # gem "ohm"

@@ -70,5 +70,5 @@ DEPENDENCIES
   rainbows
   redis
   sinatra (= 1.3)
-  sinatra-content-for2
+  sinatra-content-for2 (= 0.2.4)
   sinatra-redis
