@@ -19,14 +19,15 @@
           %a.brand{:href => "#"} Realtime Monitor
           %ul.nav
             %li.active
-              %a{:href => "#server"} By Server
+              <a href="#impressions" data-value="impressions" class="ajax">Impressions</a>
             %li
-              %a{:href => "#app"} By App
+              <a href="#clicks" data-value="clicks" class="ajax">Clicks</a>
             %li
-              %a{:href => "#user"} By User
+              <a href="#users" data-value="users" class="ajax">Users</a>
           %p.pull-right
             Logged in as
             %a{:href => "#"} @jm3
+
     .container-fluid
       .sidebar
         .well
@@ -43,7 +44,7 @@
           %h1 Miss nothing.
           %p Click and impression events happen at the speed of electrons and with the fluidity of mercury. Don't miss out.
           \#{yield}
-          %p
+          %p{ :style => "clear: both;" }
             %a.btn.primary.large Learn more »
         / Example row of columns
         .row

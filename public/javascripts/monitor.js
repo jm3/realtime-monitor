@@ -22,8 +22,8 @@ source.onmessage = function (event) {
   server = RegExp.$1;
   app = RegExp.$2;
   uid = RegExp.$4;
-  console.log( "server: " + server );
-  console.log( "app: " + app );
+  //console.log( "server: " + server );
+  //console.log( "app: " + app );
   if( uid != BOGUS_USER_ID && uid != "log" )
     $("#faces").append( "<div class='user_box user app" + app + " api" + server + "' style='background-image: url(http://img.tweetimag.es/i/" + uid + "_n);' title='" + uid + "'><div class='app' /></div>" );
 
