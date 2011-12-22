@@ -5,9 +5,9 @@
     %link{:href => "/stylesheets/screen.css", :rel => "stylesheet", :type => "text/css"}/
     %link{:rel => "stylesheet", :href => "http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css"}/
     %title<
-      = @page_title
-    %meta{:content => @meta_description || "Realtime Monitoring", :name => "description"}
-    %meta{:content => "140 Proof / John Manoogian III / jm3@140proof.com", :name => "author"}/
+      = "★ Realtime Monitoring ★ by jm3"
+    %meta{:content => "Realtime Monitoring", :name => "description"}
+    %meta{:content => "John Manoogian III / jm3@jm3.net", :name => "author"}/
     = @meta
     %link{:href => @favicon || img_path("/images/favicon.png"), :rel => "shortcut icon"}/
     = yield_content :meta
@@ -34,41 +34,71 @@
           %h5 Sidebar
           %ul
             %li
-              %a{:href => "http://admin.140proof.com"} Admin Tools
+              Created by
+              %a{:href => "http://jm3.net"} jm3
             %li
+              Fork the
               %a{:href => "http://github.com/jm3/realtime-monitor"} Code
             %li
-              %a{:href => "http://twitter.com/jm3"} Twitter
+              CSS grid by
+              %a{:href => "http://github.com/jm3/realtime-monitor"} Bootstrap
+            %li
+              %a{:href => "https://twitter.com/intent/user?screen_name=jm3"} Twitter
       .content
         / Main hero unit for a primary marketing message or call to action
         .hero-unit
           %h1 Observe everything.
           %h1 Miss nothing.
-          %p Click and impression events happen at the speed of electrons and with the fluidity of mercury. Don't miss out.
+          %hr
+          %p 
+            Server-side events happen at the speed of electrons and
+            with the fluidity of mercury.  Don't miss out.
+
           \#{yield}
           %p{ :style => "clear: both;" }
+            %hr
             %a.btn.primary.large Learn more »
         / Example row of columns
         .row
-          .span6
-            %h2 We Use Redis
-            %p Etiam porta sem malesuada magna mollis euismod. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+          .span5
+            %h2 We Use Redis.
+            %p 
+              Redis is an in-memory
+              %a{:href => "http://redis.io/"} data structure server 
+              with support for Pub-Sub, fast sorted sets, master-slave
+              replication, and safe atomic operations.
+
             %p
-              %a.btn{:href => "#"} View details »
+              %a.btn{:href => "http://redis.io/"} Learn More »
           .span5
             %h2 WebSockets Rock
-            %p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+            %p 
+              %a{:href => "http://en.wikipedia.org/wiki/WebSocket"}
+                Web Sockets
+              and
+              %a{:href => "http://en.wikipedia.org/wiki/Server-sent_events"}
+                Server-Sent Events
+              are the new HTML5 hotness way of streaming data back to a browser asynchronously without polling or page-reloading.
+              
             %p
-              %a.btn{:href => "#"} View details »
+              %a.btn{:href => "http://en.wikipedia.org/wiki/Server-sent_events"} Sockets and SSEs »
           .span5
             %h2 Rainbows is Rad
-            %p Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-            %p
-              %a.btn{:href => "#"} View details »
+            %p 
+              Rainbows is like 
+              %a{:href => "http://unicorn.rubyforge.org/"} Unicorn 
+              for asynchronous and slow clients. It's perfect for
+              streaming unpredictable data over a socket back to
+              the browser.
 
-        %hr
+            %p
+              %a.btn{:href => "http://rainbows.rubyforge.org/"} Learn More »
+
         %footer
-          %p © 140 Proof 2012
+          %p 
+            &copy;
+            %a{:href => "https://twitter.com/intent/user?screen_name=jm3"} @jm3,
+            2012
 
 
   :javascript
