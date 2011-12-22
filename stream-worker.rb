@@ -11,7 +11,7 @@ uri = URI.parse(redis_url)
 redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 
 @ssh_user = "jm3"
-@num_servers = 2
+@num_servers = 4
 
 def do_tail( session, file )
   #subject = redis.get("cfg:track")
@@ -19,6 +19,7 @@ def do_tail( session, file )
   session.open_channel do |channel|
     channel.on_data do |ch, data|
       host = channel[:host].gsub( /\.140proof\.com/, '' )
+      data = data.gsub( / - - /, ' ' ).gsub( / \+0000/, '' )
       redis.publish "global.clicks", "#{host} #{data}" and print "*Pc* " if( subject == "clicks" and data.match( %r{/clicks/} ))
       redis.publish "global.impressions", "#{host} #{data}" and print "Pi " if( subject == "impressions" and data.match( %r{/impressions/} ))
     end

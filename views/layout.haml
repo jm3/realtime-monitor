@@ -3,6 +3,7 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %link{:href => "/stylesheets/screen.css", :rel => "stylesheet", :type => "text/css"}/
+    %link{:rel => "stylesheet", :href => "http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css"}/
     %title<
       = @page_title
     %meta{:content => @meta_description || "Realtime Monitoring", :name => "description"}
@@ -12,22 +13,59 @@
     = yield_content :meta
   %body{:onload => @onload || ""}
 
-    %header
-      #trackable
-        Track:
-        - [ "impressions", "clicks", "hashtag", "keyword", "screen_name"].each do |trackable|
-          %a{:href => "/track/#{trackable}", :class => "ajax track", :"data-value" => trackable}= trackable |
+    .topbar
+      .topbar-inner
+        .container-fluid
+          %a.brand{:href => "#"} Realtime Monitor
+          %ul.nav
+            %li.active
+              %a{:href => "#server"} By Server
+            %li
+              %a{:href => "#app"} By App
+            %li
+              %a{:href => "#user"} By User
+          %p.pull-right
+            Logged in as
+            %a{:href => "#"} @jm3
+    .container-fluid
+      .sidebar
+        .well
+          %h5 Sidebar
+          %ul
+            %li
+              %a{:href => "#"} Link
+            %li
+              %a{:href => "#"} Link
+      .content
+        / Main hero unit for a primary marketing message or call to action
+        .hero-unit
+          %h1 Observe everything.
+          %h1 Miss nothing.
+          %p Click and impression events happen at the speed of electrons and with the fluidity of mercury. Don't miss out.
+          \#{yield}
+          %p
+            %a.btn.primary.large Learn more »
+        / Example row of columns
+        .row
+          .span6
+            %h2 Heading
+            %p Etiam porta sem malesuada magna mollis euismod. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+            %p
+              %a.btn{:href => "#"} View details »
+          .span5
+            %h2 Heading
+            %p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+            %p
+              %a.btn{:href => "#"} View details »
+          .span5
+            %h2 Heading
+            %p Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+            %p
+              %a.btn{:href => "#"} View details »
 
-      %a{:href => "/"}
-        monitoring
-      |
-      %a{:href => "/flip"}
-        flip demo
-      |
-      %a{:href => "/settings"}
-        settings
+          %footer
+            %p © 140 Proof 2012
 
-    \#{yield}
 
   :javascript
     var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
