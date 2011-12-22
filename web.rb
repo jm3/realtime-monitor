@@ -20,11 +20,6 @@ configure do
   redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 end
 
-# run once before each request
-before do
-  @page_title = "★ Realtime Monitoring ★"
-end
-
 get "/" do
   haml :index
 end
