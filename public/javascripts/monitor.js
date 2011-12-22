@@ -18,8 +18,10 @@ source.onmessage = function (event) {
     faces = 0;
   }
 
-  event.data.match( /&(user_id|hb)=(\d+)/ );
-  uid = RegExp.$2;
+  event.data.match( /api(\d*).*&(user_id|hb)=(\d+)/ );
+  server = RegExp.$1;
+  console.log( "server: " + server );
+  uid = RegExp.$3;
   if( uid != BOGUS_USER_ID && uid != "log" )
     $("#faces").append( "<img class='user' src='http://img.tweetimag.es/i/" 
     + uid + "_n' title='" + uid + "' width='48' height='48' />" );
@@ -41,6 +43,8 @@ function get_user_for_id( uid ) {
     success: function(data){
       var u = data;
       users.push( u[0] );
+      console.log( "twitter responded with a screen_name for the user you clicked..." );
+      console.log( u[0]["screen_name"] );
       window.open( "http://twitter.com/" + u[0]["screen_name"], "twitter_bio" );
     }
   });
