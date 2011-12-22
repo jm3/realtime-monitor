@@ -25,8 +25,7 @@ source.onmessage = function (event) {
   console.log( "server: " + server );
   console.log( "app: " + app );
   if( uid != BOGUS_USER_ID && uid != "log" )
-    $("#faces").append( "<img class='user app" + app + " api" + server + "' src='http://img.tweetimag.es/i/" 
-    + uid + "_n' title='" + uid + "' width='48' height='48' />" );
+    $("#faces").append( "<div class='user_box user app" + app + " api" + server + "' style='background-image: url(http://img.tweetimag.es/i/" + uid + "_n);' title='" + uid + "'><div class='app' /></div>" );
 
 };
 
