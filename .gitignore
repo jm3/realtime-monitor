@@ -1,6 +1,5 @@
 *.bak
 *.diff
-*.psd
 *.swp
 *~
 .DS_Store
