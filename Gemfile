@@ -2,7 +2,7 @@ source "http://rubygems.org"
 
 gem "foreman"
 gem "haml"
-gem "json"
+gem "json_pure"
 gem "net-ssh-multi"
 gem "rainbows"
 gem "redis"
