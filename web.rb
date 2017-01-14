@@ -9,6 +9,7 @@ require "sinatra"
 require "sinatra/content_for2"
 require "sinatra/redis"
 require "json"
+require "yaml"
 
 set :server, :rainbows
 

@@ -5,6 +5,7 @@ require "redis"
 require "sinatra"
 require "sinatra/redis"
 require "net/ssh/multi"
+require "yaml"
 
 config = YAML::load( File.open( "settings.yml" ) )
 
